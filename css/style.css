@@ -1,0 +1,22 @@
+* {
+    font-family: Arial, sans-serif;
+  }
+  
+  body {
+    font-size: 14px;
+  }
+
+  #grid {
+    display: grid;
+    grid-template-columns: 60px 60px 60px;
+    grid-template-rows: 60px 60px 60px;
+    justify-items: center;
+
+  }
+
+  .square {
+    height: 60px;
+    width: 60px;
+    border: solid 3px black;
+    text-align: center;
+  }
