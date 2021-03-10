@@ -10,14 +10,17 @@ const createPlayer = (name, piece) => {
 
 // Create gameboard module
 const gameBoard = (() => {
-    board = ['', '', '', '', '', '', '', '', '']
+
+
+
+    let board = ['', '', '', '', '', '', '', '', '']
 
     const grid = document.getElementById('grid');
     //Array to hold gamesquares
     let allSquares = []
 
     //Create board
-    const gameStart = () => {
+    function gameStart() {
         board = ['', '', '', '', '', '', '', '', '']
         allSquares = []
         for (i = 0; i < 9; i++) {
@@ -28,10 +31,11 @@ const gameBoard = (() => {
             grid.appendChild(newSquare);
             allSquares.push(newSquare);
         };
-
+        placePiece();
+        gameControl.gameDisplay();
     }
 
-    gameStart()
+    //gameStart();
 
     //Reset the board
     const render = () => {
@@ -39,108 +43,140 @@ const gameBoard = (() => {
         for (i = 0; i < 9; i++) {
             allSquares[i].innerHTML = board[i]
         };
-
+        gameControl.gameRound = 0;
     }
+
+
+
 
 
     //Change Square content when clicking
-    for (let i = 0; i < allSquares.length; i++) {
-        allSquares[i].addEventListener('click', () => {
 
-            if (board[i] == '') {
-                board[i] = gameControl.currentPlayer().piece;
-                allSquares[i].innerHTML = board[i]
-                gameControl.gameRound++
-            }
-            checkForWinner()
-
-
-        })
+    function placePiece() {
+        for (let i = 0; i < allSquares.length; i++) {
+            allSquares[i].addEventListener('click', () => {
+                if (board[i] == '') {
+                    board[i] = gameControl.currentPlayer().piece;
+                    allSquares[i].innerHTML = board[i];
+                    gameControl.gameRound++;
+                }
+                checkForWinner();
+                gameControl.gameDisplay();
+            })
+        }
     }
 
+    //check for winner when adding piece to board
     function checkForWinner() {
         //Check columns
-        function checkX() {
-            if (allSquares[0].innerHTML === 'x' && allSquares[3].innerHTML === 'x' && allSquares[6].innerHTML === 'x') {
-                return gameControl.player1;
-            }
-            if (allSquares[1].innerHTML === 'x' && allSquares[4].innerHTML === 'x' && allSquares[7].innerHTML === 'x') {
-                return gameControl.player1;
-            }
-            if (allSquares[2].innerHTML === 'x' && allSquares[5].innerHTML === 'x' && allSquares[8].innerHTML === 'x') {
-                return gameControl.player1;
-            }
-
-            //Check rows
-            if (allSquares[0].innerHTML === 'x' && allSquares[1].innerHTML === 'x' && allSquares[2].innerHTML === 'x') {
-                return gameControl.player1;
-            }
-            if (allSquares[3].innerHTML === 'x' && allSquares[4].innerHTML === 'x' && allSquares[5].innerHTML === 'x') {
-                return gameControl.player1;
-            }
-            if (allSquares[6].innerHTML === 'x' && allSquares[7].innerHTML === 'x' && allSquares[8].innerHTML === 'x') {
-                return gameControl.player1;
-            }
-
-            //Check diagonal
-            if (allSquares[0].innerHTML === 'x' && allSquares[4].innerHTML === 'x' && allSquares[8].innerHTML === 'x') {
-                return gameControl.player1;
-            }
-            if (allSquares[2].innerHTML === 'x' && allSquares[4].innerHTML === 'x' && allSquares[6].innerHTML === 'x') {
-                return gameControl.player1;
-            }
-            
+        if (allSquares[0].innerHTML === 'x' && allSquares[3].innerHTML === 'x' && allSquares[6].innerHTML === 'x') {
+            return gameControl.player1;
         }
-        function checkO() {
-            if (allSquares[0].innerHTML === 'o' && allSquares[3].innerHTML === 'o' && allSquares[6].innerHTML === 'o') {
-                return gameControl.player2;
-            }
-            if (allSquares[1].innerHTML === 'o' && allSquares[4].innerHTML === 'o' && allSquares[7].innerHTML === 'o') {
-                return gameControl.player2;
-            }
-            if (allSquares[2].innerHTML === 'o' && allSquares[5].innerHTML === 'o' && allSquares[8].innerHTML === 'o') {
-                return gameControl.player2;
-            }
+        if (allSquares[1].innerHTML === 'x' && allSquares[4].innerHTML === 'x' && allSquares[7].innerHTML === 'x') {
+            return gameControl.player1;
+        }
+        if (allSquares[2].innerHTML === 'x' && allSquares[5].innerHTML === 'x' && allSquares[8].innerHTML === 'x') {
+            return gameControl.player1;
+        }
 
-            //Check rows
-            if (allSquares[0].innerHTML === 'o' && allSquares[1].innerHTML === 'o' && allSquares[2].innerHTML === 'o') {
-                return gameControl.player2;
-            }
-            if (allSquares[3].innerHTML === 'o' && allSquares[4].innerHTML === 'o' && allSquares[5].innerHTML === 'o') {
-                return gameControl.player2;
-            }
-            if (allSquares[6].innerHTML === 'o' && allSquares[7].innerHTML === 'o' && allSquares[8].innerHTML === 'o') {
-                return gameControl.player2;
-            }
+        //Check rows
+        if (allSquares[0].innerHTML === 'x' && allSquares[1].innerHTML === 'x' && allSquares[2].innerHTML === 'x') {
+            return gameControl.player1;
+        }
+        if (allSquares[3].innerHTML === 'x' && allSquares[4].innerHTML === 'x' && allSquares[5].innerHTML === 'x') {
+            return gameControl.player1;
+        }
+        if (allSquares[6].innerHTML === 'x' && allSquares[7].innerHTML === 'x' && allSquares[8].innerHTML === 'x') {
+            return gameControl.player1;
+        }
 
-            //Check diagonal
-            if (allSquares[0].innerHTML === 'o' && allSquares[4].innerHTML === 'o' && allSquares[8].innerHTML === 'o') {
-                return gameControl.player2;
-            }
-            if (allSquares[2].innerHTML === 'o' && allSquares[4].innerHTML === 'o' && allSquares[6].innerHTML === 'o') {
-                return gameControl.player2;
-            }
-            
+        //Check diagonal
+        if (allSquares[0].innerHTML === 'x' && allSquares[4].innerHTML === 'x' && allSquares[8].innerHTML === 'x') {
+            return gameControl.player1;
         }
-        if (checkX() != undefined) {
-            alert('Player 1 wins')
+        if (allSquares[2].innerHTML === 'x' && allSquares[4].innerHTML === 'x' && allSquares[6].innerHTML === 'x') {
+            return gameControl.player1;
         }
-        if (checkO() != undefined) {
-            alert('Player 2 wins')
+
+
+
+        //Check columns
+        if (allSquares[0].innerHTML === 'o' && allSquares[3].innerHTML === 'o' && allSquares[6].innerHTML === 'o') {
+            return gameControl.player2;
         }
-        console.log(checkX());
-        console.log(checkO());
+        if (allSquares[1].innerHTML === 'o' && allSquares[4].innerHTML === 'o' && allSquares[7].innerHTML === 'o') {
+            return gameControl.player2;
+        }
+        if (allSquares[2].innerHTML === 'o' && allSquares[5].innerHTML === 'o' && allSquares[8].innerHTML === 'o') {
+            return gameControl.player2;
+        }
+
+        //Check rows
+        if (allSquares[0].innerHTML === 'o' && allSquares[1].innerHTML === 'o' && allSquares[2].innerHTML === 'o') {
+            return gameControl.player2;
+        }
+        if (allSquares[3].innerHTML === 'o' && allSquares[4].innerHTML === 'o' && allSquares[5].innerHTML === 'o') {
+            return gameControl.player2;
+        }
+        if (allSquares[6].innerHTML === 'o' && allSquares[7].innerHTML === 'o' && allSquares[8].innerHTML === 'o') {
+            return gameControl.player2;
+        }
+
+        //Check diagonal
+        if (allSquares[0].innerHTML === 'o' && allSquares[4].innerHTML === 'o' && allSquares[8].innerHTML === 'o') {
+            return gameControl.player2;
+        }
+        if (allSquares[2].innerHTML === 'o' && allSquares[4].innerHTML === 'o' && allSquares[6].innerHTML === 'o') {
+            return gameControl.player2;
+        }
+
     }
 
+    function resetBoard(){ 
+            render()
+            gameControl.gameDisplay();
+        }
 
 
+    //Reset board button
+    const resetButton = document.getElementById('resetButton')   
+    resetButton.addEventListener('click', () => {
+        render()
+        gameControl.gameDisplay();
+        grid.classList.add('active');
+        gameControl.endGameOptions.classList.add('hide');
+        grid.classList.remove('blur')
+    })
 
+
+    //Change players after game complete
+    const changePlayerBtn = document.getElementById('changePlayer')
+
+    changePlayerBtn.addEventListener('click', () => {
+        gameControl.pickPlayer.classList.remove('hide');
+        grid.innerHTML = '';
+        gameControl.gameRound = 0;
+        grid.classList.remove('active');
+        gameControl.endGameOptions.classList.add('hide');
+        display.textContent = 'Select player names';
+        grid.classList.remove('blur');
+    })
+
+    function endPlate() {
+        gameControl.endGameOptions.classList.remove('hide');
+        grid.classList.add('blur')
+    };
 
     return {
         board,
         render,
         allSquares,
-        grid
+        grid,
+        gameStart,
+        checkForWinner,
+        changePlayer,
+        resetBoard,
+        endPlate
     }
 })()
 
@@ -150,21 +186,51 @@ const gameBoard = (() => {
 //Control game module
 const gameControl = (() => {
 
-    //New Game Button
-    const title = document.getElementById('title');
-    const newGame = document.createElement('button');
-    newGame.innerHTML = 'New Game'
-    title.appendChild(newGame);
-    newGame.addEventListener('click', () => {
-        gameBoard.render()
-        gameControl.gameRound = 0;
-
-    })
+    //Selecting players and starting game
+    const display = document.getElementById('display');
+    const p1Name = document.getElementById('p1name');
+    const p2Name = document.getElementById('p2name');
+    const pickPlayer = document.getElementById('pick-player');
+    const endGameOptions = document.getElementById('endGame');
 
 
+    let player1
+    let player2
 
-    const player1 = createPlayer('Player 1', 'x')
-    const player2 = createPlayer('Player 2', 'o')
+    display.textContent = 'Select player names';
+
+    //Display current game status
+    function gameDisplay() {
+        if (gameControl.gameRound == 9) {
+            display.textContent = 'It\'s a draw!';
+            gameBoard.endPlate();
+        } else if (gameBoard.checkForWinner() === gameControl.player1) {
+            display.textContent = gameControl.player1.name + ' Wins!';
+            gameBoard.endPlate();
+        } else if (gameBoard.checkForWinner() === gameControl.player2) {
+            display.textContent = gameControl.player2.name + ' Wins!';
+            gameBoard.endPlate();
+        } else {
+            display.textContent = currentPlayer().name + '\'s turn'
+        }
+    }
+
+
+    //submit names and start game
+    const startGame = document.getElementById('nameSubmit')
+    startGame.classList.add('button', 'start')
+    startGame.addEventListener('click', (e) => {
+        e.preventDefault();
+        gameBoard.grid.innerHTML = '';
+        gameControl.player1 = createPlayer(p1Name.value, 'x');
+        gameControl.player2 = createPlayer(p2Name.value, 'o');
+        gameBoard.gameStart();
+        gameBoard.grid.classList.add('active');
+        pickPlayer.classList.add('hide');
+    });
+
+
+    
 
 
 
@@ -172,20 +238,22 @@ const gameControl = (() => {
 
     function currentPlayer() {
         if (gameControl.gameRound % 2 == 0) {
-            return player1;
+            return gameControl.player1;
         } else {
-            return player2;
+            return gameControl.player2;
         }
+
     }
-
-
-
 
     return {
         player1,
         player2,
         gameRound,
-        currentPlayer
+        currentPlayer,
+        gameDisplay,
+        display,
+        pickPlayer,
+        endGameOptions
     }
 })()
 

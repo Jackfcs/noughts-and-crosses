@@ -4,18 +4,41 @@
 <head>
 
   <link href="css/style.css" rel="stylesheet">
-  
+
 </head>
 
-<body>
+<body id="body">
   <h1 id='title'>
     Noughts and Crosses
   </h1>
-    
-    <div id="grid">
-    </div>
 
-  
+
+
+  <div id="pick-player">
+    <form id="startGameForm">
+      <div class="p1input">
+        <label for="p1name">Player 1 Name</label>
+        <input type="text" id="p1name" name="p1name" placeholder="Player 1">
+      </div>
+
+      <div class="p2input">
+        <label for="p2name">Player 2 Name</label>
+        <input type="text" id="p2name" name="p2name" placeholder="Player 2">
+      </div>
+      <input type="submit" value="Start game" id="nameSubmit">
+    </form>
+  </div>
+
+
+  <div id="display"></div>
+  <div id="grid" class="hide"></div>
+
+  <div id="endGame" class="hide">
+    <button class="button" id="resetButton">Reset Board</button>
+    <button class="button" id="changePlayer">Change Player</button>
+  </div>
+
+
 </body>
 
 <script src="js/script.js"></script>
