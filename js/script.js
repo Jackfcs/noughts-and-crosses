@@ -239,7 +239,8 @@ const gameControl = (() => {
         gameRound,
         currentPlayer,
         gameDisplay,
-        endGameOptions
+        endGameOptions,
+        pickPlayer
     }
 })()
 
