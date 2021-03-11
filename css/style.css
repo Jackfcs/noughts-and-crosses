@@ -27,7 +27,7 @@
     margin-right: auto;
     font-size: 1.2rem;
     position: fixed;
-    top: 150px;
+    top: 100px;
     left: 50%;
     transform: translate(-50%, -50%) scale(1);
     color: rgb(63, 63, 63);
@@ -37,14 +37,15 @@
 
   #grid {
     display: grid;
-    grid-template-columns: 60px 60px 60px;
-    grid-template-rows: 60px 60px 60px;
+    width: 270px;
+    height: 270px;
+    grid-template-columns: 90px 90px 90px;
+    grid-template-rows: 90px 90px 90px;
     position: fixed;
     top: 50%;
     left: 50%;
     background-color: cornflowerblue;
-    padding: 1rem;
-    border-radius: 1rem;
+    border-radius: 5px;
     box-shadow: 5px 5px 5px rgba(1, 1, 1, 0.25);
     padding: 10px;
     
@@ -59,7 +60,7 @@
     justify-content: space-between;
     align-items: center;
     position: fixed;
-    top: 50%;
+    top: 30%;
     left: 50%;
     transform: translate(-50%, -50%) scale(1);
     z-index: 5;
@@ -70,10 +71,10 @@
   
 
   .square {
-    height: 60px;
-    width: 60px;
-    line-height: 60px;
-    font-size: 3rem;
+    height: 90px;
+    width: 90px;
+    line-height: 90px;
+    font-size: 5rem;
     border: solid;
     text-align: center;
     cursor: pointer;
