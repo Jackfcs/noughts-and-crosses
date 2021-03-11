@@ -11,8 +11,6 @@ const createPlayer = (name, piece) => {
 // Create gameboard module
 const gameBoard = (() => {
 
-
-
     let board = ['', '', '', '', '', '', '', '', '']
 
     const grid = document.getElementById('grid');
@@ -35,8 +33,6 @@ const gameBoard = (() => {
         gameControl.gameDisplay();
     }
 
-    //gameStart();
-
     //Reset the board
     const render = () => {
         board = ['', '', '', '', '', '', '', '', '']
@@ -47,11 +43,7 @@ const gameBoard = (() => {
     }
 
 
-
-
-
     //Change Square content when clicking
-
     function placePiece() {
         for (let i = 0; i < allSquares.length; i++) {
             allSquares[i].addEventListener('click', () => {
@@ -132,14 +124,15 @@ const gameBoard = (() => {
 
     }
 
-    function resetBoard(){ 
-            render()
-            gameControl.gameDisplay();
-        }
+    //Clear board
+    function resetBoard() {
+        render()
+        gameControl.gameDisplay();
+    }
 
 
     //Reset board button
-    const resetButton = document.getElementById('resetButton')   
+    const resetButton = document.getElementById('resetButton')
     resetButton.addEventListener('click', () => {
         render()
         gameControl.gameDisplay();
@@ -162,6 +155,7 @@ const gameBoard = (() => {
         grid.classList.remove('blur');
     })
 
+    //Hide or show end game options
     function endPlate() {
         gameControl.endGameOptions.classList.remove('hide');
         grid.classList.add('blur')
@@ -174,13 +168,10 @@ const gameBoard = (() => {
         grid,
         gameStart,
         checkForWinner,
-        changePlayer,
         resetBoard,
         endPlate
     }
 })()
-
-
 
 
 //Control game module
@@ -194,14 +185,11 @@ const gameControl = (() => {
     const endGameOptions = document.getElementById('endGame');
 
 
-    let player1
-    let player2
-
     display.textContent = 'Select player names';
 
     //Display current game status
     function gameDisplay() {
-        if (gameControl.gameRound == 9) {
+        if (gameControl.gameRound == 9 && gameBoard.checkForWinner() == undefined) {
             display.textContent = 'It\'s a draw!';
             gameBoard.endPlate();
         } else if (gameBoard.checkForWinner() === gameControl.player1) {
@@ -219,19 +207,22 @@ const gameControl = (() => {
     //submit names and start game
     const startGame = document.getElementById('nameSubmit')
     startGame.classList.add('button', 'start')
-    startGame.addEventListener('click', (e) => {
-        e.preventDefault();
+    startGame.addEventListener('click', () => {
         gameBoard.grid.innerHTML = '';
-        gameControl.player1 = createPlayer(p1Name.value, 'x');
-        gameControl.player2 = createPlayer(p2Name.value, 'o');
+        if (p1Name.value == '') {
+            gameControl.player1 = createPlayer('Player 1', 'x')
+        } else {
+            gameControl.player1 = createPlayer(p1Name.value, 'x');
+        }
+        if (p2Name.value == '') {
+            gameControl.player2 = createPlayer('Player 2', 'o')
+        } else {
+            gameControl.player2 = createPlayer(p2Name.value, 'o');
+        }
         gameBoard.gameStart();
         gameBoard.grid.classList.add('active');
         pickPlayer.classList.add('hide');
     });
-
-
-    
-
 
 
     gameRound = 0;
@@ -242,17 +233,12 @@ const gameControl = (() => {
         } else {
             return gameControl.player2;
         }
-
     }
 
     return {
-        player1,
-        player2,
         gameRound,
         currentPlayer,
         gameDisplay,
-        display,
-        pickPlayer,
         endGameOptions
     }
 })()
